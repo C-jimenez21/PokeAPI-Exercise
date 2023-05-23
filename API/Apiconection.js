@@ -5,6 +5,7 @@ let url = "https://pokeapi.co/api/v2/pokemon/"
 let container = document.querySelector(".showCards")
 let btnBack = document.querySelector(".Back")
 let btnNext = document.querySelector(".Next")
+let btnSelectNature = document.querySelectorAll(".btn-header")
 
 //acciones
 btnBack.addEventListener("click", (e) => {
@@ -49,20 +50,44 @@ async function rangePokemones (offset, limit){
 function createCardPokemon(pokemon){
     let naturaleza = pokemon.types.map((e)=> `<p class = "${e.type.name}" >${e.type.name}</p>`)
        
-    container.innerHTML+=` <div class="card">
-    <div class="card-header">
-    <p>#${pokemon.id}</p>
-        <img src="${pokemon.sprites.other.home.front_default}" alt="">
-    </div>
-    <div class="card-body">
-        <h3>${pokemon.name}</h3>
-        <div class = "powers">
-        ${naturaleza.join("")}
-    </div>
-        <button class="btn-Id" data-idPoke="${pokemon.id}">Mostrar mas</button>
-    </div>
-</div>`
+    container.innerHTML+=` 
+    <div class="card">
+        <div class="card-header">
+            <p>#${pokemon.id}</p>
+            <img src="${pokemon.sprites.other.home.front_default}" alt="">
+            </div>
+        <div class="card-body">
+            <h3>${pokemon.name}</h3>
+            <div class = "powers">
+                ${naturaleza.join("")}
+            </div>
+            <button class="btn-Id" data-idPoke="${pokemon.id}">Mostrar mas</button>
+        </div>
+    </div>`
 }
 
+btnSelectNature.forEach(boton => boton.addEventListener("click", async (e) => {
+    const btnID = e.currentTarget.id
+    container.innerHTML = ""
+    if(btnID === "ver-todos"){
+        btnBack.style = "display:block"
+        btnNext.style = "display:block"
+        return rangePokemones(offset, limit)
+    }
+     
+    for (let i = 1; i<= 151; i++){
+        const promise = await fetch(url+i)
+        const result = await promise.json()
+        
+            const tipos = result.types.map(e=> e.type.name)
+            if(tipos.some(tipo=> tipo.includes(btnID)))
+            {
+                btnBack.style = "display:none"
+                btnNext.style = "display:none"
+                createCardPokemon(result)
+             }
+        }
+       
+        }   ))
 
 rangePokemones(offset, limit)

@@ -87,7 +87,9 @@ ul{
     grid-template-rows: 1fr 1fr 1fr;
     gap: 20px;
     padding: 50px ;
+    margin-top: 30px;
     justify-items:center;
+    overflow: auto;
 
 }
 
@@ -114,7 +116,18 @@ ul{
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    font-variant-caps: all-petite-caps;
 
+}
+
+.powers{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5px;
+}
+.powers p {
+    padding: 2px;
+    border-radius: 100vh;
 }
 
 .btn-Id{
