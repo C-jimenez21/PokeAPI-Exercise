@@ -6,6 +6,9 @@ let container = document.querySelector(".showCards")
 let btnBack = document.querySelector(".Back")
 let btnNext = document.querySelector(".Next")
 let btnSelectNature = document.querySelectorAll(".btn-header")
+let barSearch = document.querySelector("#searchPoke")
+let containerHabilites = document.querySelector(".search-card")
+let btnSearch = document.querySelector("#btnSearch")
 
 //acciones
 btnBack.addEventListener("click", (e) => {
@@ -61,15 +64,15 @@ function createCardPokemon(pokemon){
             <div class = "powers">
                 ${naturaleza.join("")}
             </div>
-            <button class="btn-Id" data-idPoke="${pokemon.id}">Mostrar mas</button>
+            <button class="btn-Id" id="btnId" data-id="${pokemon.id}">Mostrar mas</button>
         </div>
     </div>`
 }
 
 btnSelectNature.forEach(boton => boton.addEventListener("click", async (e) => {
-    const btnID = e.currentTarget.id
+    const btnListID = e.currentTarget.id
     container.innerHTML = ""
-    if(btnID === "ver-todos"){
+    if(btnListID === "ver-todos"){
         btnBack.style = "display:block"
         btnNext.style = "display:block"
         return rangePokemones(offset, limit)
@@ -80,7 +83,7 @@ btnSelectNature.forEach(boton => boton.addEventListener("click", async (e) => {
         const result = await promise.json()
         
             const tipos = result.types.map(e=> e.type.name)
-            if(tipos.some(tipo=> tipo.includes(btnID)))
+            if(tipos.some(tipo=> tipo.includes(btnListID)))
             {
                 btnBack.style = "display:none"
                 btnNext.style = "display:none"
@@ -89,5 +92,42 @@ btnSelectNature.forEach(boton => boton.addEventListener("click", async (e) => {
         }
        
         }   ))
-
 rangePokemones(offset, limit)
+
+container.addEventListener("click", searchById)
+function searchById(e){
+    if(e.target.classList.contains("btn-Id")){
+        const pokemonId = parseInt(e.target.dataset.id)
+        console.log(pokemonId);
+        //funcion buscadora de pokemones
+        searchByIdOrName(pokemonId)
+    }
+}
+
+async function searchByIdOrName(dato){
+    const response = await fetch(url+dato)
+    const result = await response.json()
+    console.log(url+dato)
+    let naturaleza = result.types.map((e)=> `<p class = "${e.type.name}" >${e.type.name}</p>`)
+    containerHabilites.innerHTML = `
+    <h3>${result.name}</h3>
+                <div class="nature">
+                    ${naturaleza.join("")}
+                </div>
+                <div class="search-card-header">
+                    <img src="${result.sprites.other.home.front_default}" alt="">
+                </div>
+                <div class="search-card-body">
+                    <p>${result.stats[0].stat.name} <span>${result.stats[0].base_stat}</span></p>
+                    <p>${result.stats[1].stat.name} <span>${result.stats[1].base_stat}</span></p>
+                    <p>${result.stats[2].stat.name} <span>${result.stats[2].base_stat}</span></p>
+                    <p>${result.stats[3].stat.name} <span>${result.stats[3].base_stat}</span></p>
+                    <p>${result.stats[4].stat.name} <span>${result.stats[4].base_stat}</span></p>
+                </div>
+    `
+}
+
+btnSearch.addEventListener("click", () => {
+    let elemento = barSearch.value
+    searchByIdOrName(elemento.toLowerCase())
+})
