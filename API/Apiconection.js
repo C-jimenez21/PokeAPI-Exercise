@@ -118,11 +118,11 @@ async function searchByIdOrName(dato){
                     <img src="${result.sprites.other.home.front_default}" alt="">
                 </div>
                 <div class="search-card-body">
-                    <p>${result.stats[0].stat.name} <span>${result.stats[0].base_stat}</span></p>
-                    <p>${result.stats[1].stat.name} <span>${result.stats[1].base_stat}</span></p>
-                    <p>${result.stats[2].stat.name} <span>${result.stats[2].base_stat}</span></p>
-                    <p>${result.stats[3].stat.name} <span>${result.stats[3].base_stat}</span></p>
-                    <p>${result.stats[4].stat.name} <span>${result.stats[4].base_stat}</span></p>
+                    <p>${result.stats[0].stat.name}: </p> <p>${result.stats[0].base_stat}</p>
+                    <p>${result.stats[1].stat.name}: </p> <p>${result.stats[1].base_stat}</p>
+                    <p>${result.stats[2].stat.name}: </p> <p>${result.stats[2].base_stat}</p>
+                    <p>${result.stats[3].stat.name}: </p> <p>${result.stats[3].base_stat}</p>
+                    <p>${result.stats[4].stat.name}: </p> <p>${result.stats[4].base_stat}</p>
                 </div>
     `
 }
