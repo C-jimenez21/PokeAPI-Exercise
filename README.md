@@ -22,4 +22,4 @@ Para disfrutar de la aplicación sigue el siguente link:  https://c-jimenez21.gi
 
 ----
 
-![image-20230523235507020](C:\Users\crist\AppData\Roaming\Typora\typora-user-images\image-20230523235507020.png)
+![ss](Img\ss.png)
